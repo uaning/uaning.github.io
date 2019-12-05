@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on uaning</title>
+    <link>http://uaning.github.io/tags/</link>
+    <description>Recent content in Tags on uaning</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 06 Dec 2019 05:15:44 +0800</lastBuildDate>
+    
+	<atom:link href="http://uaning.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MySQL</title>
+      <link>http://uaning.github.io/tags/mysql/</link>
+      <pubDate>Fri, 06 Dec 2019 05:15:44 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>XML</title>
+      <link>http://uaning.github.io/tags/xml/</link>
+      <pubDate>Fri, 06 Dec 2019 05:15:44 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/tags/xml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>转义字符</title>
+      <link>http://uaning.github.io/tags/%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/</link>
+      <pubDate>Fri, 06 Dec 2019 05:15:44 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/tags/%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
