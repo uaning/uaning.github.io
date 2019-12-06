@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Java on uaning</title>
-    <link>http://uaning.github.io/categories/java/</link>
-    <description>Recent content in Java on uaning</description>
+    <title>JVM on uaning</title>
+    <link>http://uaning.github.io/tags/jvm/</link>
+    <description>Recent content in JVM on uaning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 06 Dec 2019 18:44:45 +0800</lastBuildDate>
     
-	<atom:link href="http://uaning.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://uaning.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>http://uaning.github.io/post/2019-12-07-jvm-stringtable/</guid>
       <description>为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important</description>
-    </item>
-    
-    <item>
-      <title>如何在XML中转义&amp;</title>
-      <link>http://uaning.github.io/post/2019-12-06-how-to-escape-in-xml/</link>
-      <pubDate>Fri, 06 Dec 2019 05:15:44 +0800</pubDate>
-      
-      <guid>http://uaning.github.io/post/2019-12-06-how-to-escape-in-xml/</guid>
-      <description>背景介绍 配置Hibernate时遇到的小问题 数据库 MySQL 数据库版本 8.0.18 MySQL Community Server - GPL MySQL 8.0 以上版本的数据库连接有所不同: 使用8.0以上版本的驱动包 mysql-connector-java-8.0.xx.jar Url =</description>
     </item>
     
   </channel>
