@@ -13,10 +13,10 @@
     
     <item>
       <title>JVM StringTable</title>
-      <link>http://uaning.github.io/post/2019-12-07-jvm-stringtable/</link>
+      <link>http://uaning.github.io/post/jvm-stringtable/</link>
       <pubDate>Fri, 06 Dec 2019 18:44:45 +0800</pubDate>
       
-      <guid>http://uaning.github.io/post/2019-12-07-jvm-stringtable/</guid>
+      <guid>http://uaning.github.io/post/jvm-stringtable/</guid>
       <description>为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important</description>
     </item>
     

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JVM StringTable - uaning</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="uaning" /><meta name="description" content="为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1 with theme even" />
+
+
+<link rel="canonical" href="http://uaning.github.io/post/jvm-stringtable/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JVM StringTable" />
+<meta property="og:description" content="为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://uaning.github.io/post/jvm-stringtable/" />
+<meta property="article:published_time" content="2019-12-06T18:44:45+08:00" />
+<meta property="article:modified_time" content="2019-12-06T18:44:45+08:00" />
+<meta itemprop="name" content="JVM StringTable">
+<meta itemprop="description" content="为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important">
+
+
+<meta itemprop="datePublished" content="2019-12-06T18:44:45&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-06T18:44:45&#43;08:00" />
+<meta itemprop="wordCount" content="928">
+
+
+
+<meta itemprop="keywords" content="JVM,StringTable," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JVM StringTable"/>
+<meta name="twitter:description" content="为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。 Understanding JVM architecture and how Java really works under the hood is an important"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">uaning</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">uaning</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JVM StringTable</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-06 18:44 Friday </span>
+        <div class="post-category">
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="more-meta"> 约 928 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#字符串常量池-stringtable">字符串常量池 StringTable :</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>为了有效的利用java生态系统，理解JVM体系结构和java的底层工作方式是每个java开发人员的重要学习内容。</p>
+
+<blockquote>
+<p>Understanding JVM architecture and how Java really works under the hood is an important learning for every Java developer in order to effectively make use of Java ecosystem.</p>
+</blockquote>
+
+<figure>
+    <img src="/1-3jvm.png"
+         alt="image"/> <figcaption>
+            <p>JVM Architecture img:PlatformEngineer.com</p>
+        </figcaption>
+</figure>
+
+
+<h2 id="字符串常量池-stringtable">字符串常量池 StringTable :</h2>
+
+<p>JVM为了提高性能和减少内存开销，在实例化字符串常量的时候进行了一些优化</p>
+
+<ol>
+<li>为字符串开辟一个字符串常量池，类似于缓存区</li>
+<li>创建字符串常量时，首先坚持字符串常量池是否存在该字符串</li>
+<li>存在该字符串，返回引用实例，不存在，实例化该字符串并放入池中</li>
+</ol>
+
+<p>在java7的时候将字符串常量池移到java heap，字符串常量池被限制在整个应用的堆内存中，在运行时调用String.intern()增加字符串常量不会使永久代OOM了。</p>
+
+<p>通过两段代码理解 <code>StringTable</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="err">public void </span><span class="n">testDemo2</span><span class="p">()</span> <span class="p">{</span>
+	<span class="err">String s1 </span><span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+	<span class="err">String s2 </span><span class="o">=</span> <span class="s">&#34;b&#34;</span><span class="p">;</span>
+	<span class="err">String s3 </span><span class="o">=</span> <span class="s">&#34;ab&#34;</span><span class="p">;</span>
+
+	<span class="err">String s4 </span><span class="o">=</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span><span class="p">;</span>
+	<span class="err">String s5 </span><span class="o">=</span> <span class="s">&#34;a&#34;</span> <span class="o">+</span> <span class="s">&#34;b&#34;</span><span class="p">;</span>
+
+
+	<span class="c1">// 判断 引用s3 和 引用s4 指向的是同一个对象吗？
+</span><span class="c1"></span>	<span class="k">if</span> <span class="p">(</span><span class="n">s3</span> <span class="o">==</span> <span class="n">s4</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 == s4&#34;</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 != s4&#34;</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="c1">// 判断 引用s3 和 引用s5 指向的是同一个对象吗？
+</span><span class="c1"></span>	<span class="k">if</span> <span class="p">(</span><span class="n">s3</span> <span class="o">==</span> <span class="n">s5</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 == s5&#34;</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 != s5&#34;</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="err">String s6 </span><span class="o">=</span> <span class="n">s4</span><span class="p">.</span><span class="na">intern</span><span class="p">();</span>
+
+	<span class="c1">// 判断 引用s3 和 引用s6 指向的是同一个对象吗？
+</span><span class="c1"></span>	<span class="k">if</span> <span class="p">(</span><span class="n">s3</span> <span class="o">==</span> <span class="n">s6</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 == s6&#34;</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;s3 != s6&#34;</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 判断intern后，引用s3和引用s4 指向的是同一个对象吗？
+</span><span class="c1"></span>	<span class="k">if</span> <span class="p">(</span><span class="n">s3</span> <span class="o">==</span> <span class="n">s4</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;after s4.intern(), s3 == s4&#34;</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;after s4.intern(), s3 != s4&#34;</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="o">----------------------------</span>
+<span class="err">java version </span><span class="s">&#34;13.0.1&#34;</span> 
+<span class="o">----------------------------</span>
+<span class="n">s3</span> <span class="o">!=</span> <span class="err">s4
+</span><span class="err">s3 </span><span class="o">==</span> <span class="err">s5
+</span><span class="err">s3 </span><span class="o">==</span> <span class="err">s6
+</span><span class="err">after </span><span class="n">s4</span><span class="p">.</span><span class="na">intern</span><span class="p">(),</span> <span class="n">s3</span> <span class="o">!=</span> <span class="n">s4</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>理想情况下，下面这段代码一共创建了几个对象？几个字符串对象？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//理想情况下下面这段代码一共创建了几个对象？几个字符串对象？
+</span><span class="c1"></span><span class="err">String s </span><span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="s">&#34;str&#34;</span><span class="p">)</span><span class="o">+</span><span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="s">&#34;ing&#34;</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>理想情况下，应该一共创建了6个对象，其中包含5个字符串对象，一个StringBulider对象；</p>
+
+<ul>
+<li>对象1， 内容 <code>str</code>, 存储在常量池中；</li>
+<li>对象2， 内容 <code>ing</code>, 存储在常量池中；</li>
+<li>对象3， 内容 <code>str</code>, 存储在堆中；</li>
+<li>对象4， 内容 <code>ing</code>, 存储在堆中；</li>
+<li>对象5， <code>StringBuilder</code>, 存储在堆中；(字符串拼接符号<code>+</code>，实际调用了 StringBuilder.append()以及 toString())</li>
+<li>对象6， 内容 <code>string</code>, 存储在堆中；</li>
+</ul>
+
+<p>类加载时，<code>str</code>,<code>ing</code> 会被放到字符串常量池中（考虑常量池中未创建的情况）
+运行时， <code>new String(&quot;str&quot;)</code> 创建一个对象，<code>new String(&quot;ing&quot;)</code> 创建一个对象，  字符串拼接符号<code>+</code>实际是调用了<code>StringBuilder</code>方法后再 <code>toString()</code>, 此时会创建一个 <code>StringBuilder</code> 对象和一个拼接完成后的字符串对象；</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://medium.com/platform-engineer/understanding-jvm-architecture-22c0ddf09722">Understanding JVM Architecture</a></li>
+<li><a href="https://platformengineer.com">PlatformEngineer.com</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">uaning</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-12-06 18:44 Friday
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/alipay.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/jvm/">JVM</a>
+          <a href="/tags/stringtable/">StringTable</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/are-you-ok/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Are you OK?</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/how-to-escape-in-xml/">
+            <span class="next-text nav-default">如何在XML中转义&amp;</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="uaning/blogu"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:nathan.fuhm@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/uaning/" class="iconfont icon-github" title="github"></a>
+  <a href="http://uaning.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">uaning</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

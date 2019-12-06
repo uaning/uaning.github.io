@@ -13,10 +13,10 @@
     
     <item>
       <title>如何在XML中转义&amp;</title>
-      <link>http://uaning.github.io/post/2019-12-06-how-to-escape-in-xml/</link>
+      <link>http://uaning.github.io/post/how-to-escape-in-xml/</link>
       <pubDate>Fri, 06 Dec 2019 05:15:44 +0800</pubDate>
       
-      <guid>http://uaning.github.io/post/2019-12-06-how-to-escape-in-xml/</guid>
+      <guid>http://uaning.github.io/post/how-to-escape-in-xml/</guid>
       <description>背景介绍 配置Hibernate时遇到的小问题 数据库 MySQL 数据库版本 8.0.18 MySQL Community Server - GPL MySQL 8.0 以上版本的数据库连接有所不同: 使用8.0以上版本的驱动包 mysql-connector-java-8.0.xx.jar Url =</description>
     </item>
     

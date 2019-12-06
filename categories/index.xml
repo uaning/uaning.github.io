@@ -6,10 +6,19 @@
     <description>Recent content in Categories on uaning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Dec 2019 18:44:45 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Dec 2019 19:24:03 +0800</lastBuildDate>
     
 	<atom:link href="http://uaning.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Music</title>
+      <link>http://uaning.github.io/categories/music/</link>
+      <pubDate>Fri, 06 Dec 2019 19:24:03 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/categories/music/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Java</title>
@@ -17,6 +26,33 @@
       <pubDate>Fri, 06 Dec 2019 18:44:45 +0800</pubDate>
       
       <guid>http://uaning.github.io/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>category-2</title>
+      <link>http://uaning.github.io/categories/category-2/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/categories/category-2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>category-3</title>
+      <link>http://uaning.github.io/categories/category-3/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/categories/category-3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Theme preview</title>
+      <link>http://uaning.github.io/categories/theme-preview/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/categories/theme-preview/</guid>
       <description></description>
     </item>
     
