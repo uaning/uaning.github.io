@@ -6,7 +6,7 @@
     <description>Recent content in Posts on uaning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Dec 2019 19:24:03 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 11 Dec 2019 06:53:31 +0800</lastBuildDate>
     
 	<atom:link href="http://uaning.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,6 +18,15 @@
       
       <guid>http://uaning.github.io/post/even-preview/</guid>
       <description>Based on MarkdownPreview test.md. Markdown 1 2 3 4 5 6 7 8 # H1 ## H2 ### H3 #### H4 ##### H5 ###### H6 ### Duplicate Header ### Duplicate Header H1 H2 H3 H4 H5 H6 Duplicate Header Duplicate Header Paragraphs 1 2 3 4 This is a paragraph. I am still part of the paragraph. New paragraph. This is a paragraph. I am still part of the paragraph.</description>
+    </item>
+    
+    <item>
+      <title>practical tool list</title>
+      <link>http://uaning.github.io/post/practical-tool-list/</link>
+      <pubDate>Wed, 11 Dec 2019 06:53:31 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/post/practical-tool-list/</guid>
+      <description>实用工具整理 top 1. 命名辅助网站 Find real-world usage variable names 帮助解决世纪难题 命名 top 2. Github下载工具 Github Download Tool 输入文件地址即可下载 top 3. Maven 官方仓库坐标查询 mvnrepository search.maven top 4. G</description>
     </item>
     
     <item>

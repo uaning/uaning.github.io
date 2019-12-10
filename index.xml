@@ -6,7 +6,7 @@
     <description>Recent content on uaning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Dec 2019 19:24:03 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 11 Dec 2019 06:53:31 +0800</lastBuildDate>
     
 	<atom:link href="http://uaning.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -27,6 +27,15 @@
       
       <guid>http://uaning.github.io/about/</guid>
       <description>Hugo is a static site engine written in Go. It makes use of a variety of open source projects including: Cobra Viper J Walter Weatherman Cast Learn more and contribute on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>practical tool list</title>
+      <link>http://uaning.github.io/post/practical-tool-list/</link>
+      <pubDate>Wed, 11 Dec 2019 06:53:31 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/post/practical-tool-list/</guid>
+      <description>实用工具整理 top 1. 命名辅助网站 Find real-world usage variable names 帮助解决世纪难题 命名 top 2. Github下载工具 Github Download Tool 输入文件地址即可下载 top 3. Maven 官方仓库坐标查询 mvnrepository search.maven top 4. G</description>
     </item>
     
     <item>

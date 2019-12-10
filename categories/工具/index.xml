@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具 on uaning</title>
+    <link>http://uaning.github.io/categories/%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 工具 on uaning</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 11 Dec 2019 06:53:31 +0800</lastBuildDate>
+    
+	<atom:link href="http://uaning.github.io/categories/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>practical tool list</title>
+      <link>http://uaning.github.io/post/practical-tool-list/</link>
+      <pubDate>Wed, 11 Dec 2019 06:53:31 +0800</pubDate>
+      
+      <guid>http://uaning.github.io/post/practical-tool-list/</guid>
+      <description>实用工具整理 top 1. 命名辅助网站 Find real-world usage variable names 帮助解决世纪难题 命名 top 2. Github下载工具 Github Download Tool 输入文件地址即可下载 top 3. Maven 官方仓库坐标查询 mvnrepository search.maven top 4. G</description>
+    </item>
+    
+  </channel>
+</rss>
